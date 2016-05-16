@@ -39,7 +39,7 @@ public class SOAPHeader {
      * @return SOAP Header element
      * @throws Exception
      */
-    public static Element createSOAPHeader(Document doc, DocumentBuilder docBuilder) throws Exception {
+    public Element createSOAPHeader(Document doc, DocumentBuilder docBuilder) throws Exception {
         String soapVersion = SOAPVersion.soapVersion;
         String namespaceURI = null;
         String specifiedEndpoint = null;
@@ -80,7 +80,7 @@ public class SOAPHeader {
      * @param namespaceURI
      * @return mustUnderstand attribute
      */
-    public static Attr createMustUnderstandAttr(Document doc, String namespaceURI) {
+    public Attr createMustUnderstandAttr(Document doc, String namespaceURI) {
         Attr mustUnderstandAttr = doc.createAttributeNS(namespaceURI, Constants.MUST_UNDERSTAND);
         mustUnderstandAttr.setValue("1");
         mustUnderstandAttr.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
@@ -95,7 +95,7 @@ public class SOAPHeader {
      * @param specifiedEndpoint
      * @return actor/role attribute
      */
-    public static Attr createSpecifiedEndpointAttr(Document doc, String namespaceURI, String specifiedEndpoint) {
+    public Attr createSpecifiedEndpointAttr(Document doc, String namespaceURI, String specifiedEndpoint) {
         Attr specifiedEndpointAttr = doc.createAttributeNS(namespaceURI, specifiedEndpoint);
         specifiedEndpointAttr.setValue("");
         specifiedEndpointAttr.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
@@ -111,7 +111,7 @@ public class SOAPHeader {
      * @return node element i.e. the header block converted into an xml element by the DOM element
      * @throws Exception
      */
-    public static Node addHeaderBlock(String headers, DocumentBuilder docBuilder, Document doc) throws Exception {
+    public Node addHeaderBlock(String headers, DocumentBuilder docBuilder, Document doc) throws Exception {
         Node fragmentNode = docBuilder.parse(new InputSource(new StringReader(headers)))
                 .getDocumentElement();
         fragmentNode = doc.importNode(fragmentNode, true);
@@ -125,7 +125,7 @@ public class SOAPHeader {
      *
      * @return header block
      */
-    public static String getHeaderBlock() {
+    public String getHeaderBlock() {
         //Sample header block is for SOAP 1.1. This is specified by the user
         String headers = "<m:Trans xmlns:m=\"http://www.w3schools.com/transaction/\" soapenv:actor=\"http://www.w3schools.com/appml/\">234 </m:Trans>";
         return headers;

@@ -35,7 +35,8 @@ public class MainClass {
     public static void main(String[] args) throws Exception {
 
         String wsdlUrl = "http://localhost:9763/services/HelloService?wsdl";
-        String message = SOAPEnvelope.generateSOAPEnvelope();
+        SOAPEnvelope soapEnvelope = new SOAPEnvelope();
+        String message = soapEnvelope.generateSOAPEnvelope();
         System.out.println("REQUEST  ---->  " +message);
         System.out.println();
         String response = sendSoapRequest(message, wsdlUrl);

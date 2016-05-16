@@ -36,7 +36,7 @@ public class SOAP12Fault {
      * @return SOAP Fault Model element for SOAP 1.2
      * @throws Exception
      */
-    public static Element createSOAP12FaultModel(Document doc, DocumentBuilder docBuilder, String namespaceURI) throws Exception {
+    public Element createSOAP12FaultModel(Document doc, DocumentBuilder docBuilder, String namespaceURI) throws Exception {
 
         Element faultElement = doc.createElementNS(namespaceURI, Constants.SOAP_FAULT);
         faultElement.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
@@ -61,7 +61,7 @@ public class SOAP12Fault {
      * @param namespaceURI
      * @return SOAP Fault Code element for SOAP 1.2
      */
-    public static Element createSOAP12FaultCode(Document doc, String namespaceURI) {
+    public Element createSOAP12FaultCode(Document doc, String namespaceURI) {
         Element faultCodeElement = doc.createElementNS(namespaceURI, SOAP12Constants.SOAP_FAULT_CODE);
         faultCodeElement.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
 
@@ -83,7 +83,7 @@ public class SOAP12Fault {
      * @param namespaceURI
      * @return SOAP Fault Code Value for SOAP 1.2
      */
-    public static Element createSOAP12FaultCodeValue(Document doc, String namespaceURI) {
+    public Element createSOAP12FaultCodeValue(Document doc, String namespaceURI) {
         Element faultCodeValueElement = doc.createElementNS(namespaceURI, SOAP12Constants.SOAP_FAULT_VALUE);
         faultCodeValueElement.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
         faultCodeValueElement.appendChild(doc.createTextNode("env:Sender"));
@@ -97,7 +97,7 @@ public class SOAP12Fault {
      * @param namespaceURI
      * @return SOAP Fault SubCode element for SOAP 1.2
      */
-    public static Element createSOAP12FaultSubCode(Document doc, String namespaceURI) {
+    public Element createSOAP12FaultSubCode(Document doc, String namespaceURI) {
         Element faultSubCodeElement = doc.createElementNS(namespaceURI, SOAP12Constants.SOAP_FAULT_SUBCODE);
         faultSubCodeElement.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
 
@@ -116,7 +116,7 @@ public class SOAP12Fault {
      * @param namespaceURI
      * @return SOAP Fault SubCode Value element for SOAP 1.2
      */
-    public static Element createSOAP12FaultSubCodeValue(Document doc, String namespaceURI) {
+    public Element createSOAP12FaultSubCodeValue(Document doc, String namespaceURI) {
         Element faultSubCodeValueElement = doc.createElementNS(namespaceURI, SOAP12Constants.SOAP_FAULT_VALUE);
         faultSubCodeValueElement.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
         faultSubCodeValueElement.appendChild(doc.createTextNode("mycode:SomeError"));
@@ -130,7 +130,7 @@ public class SOAP12Fault {
      * @param namespaceURI
      * @return SOAP Fault Reason element for SOAP 1.2
      */
-    public static Element createSOAP12FaultReason(Document doc, String namespaceURI) {
+    public Element createSOAP12FaultReason(Document doc, String namespaceURI) {
         Element faultCodeElement = doc.createElementNS(namespaceURI, SOAP12Constants.SOAP_FAULT_REASON);
         faultCodeElement.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
 
@@ -148,7 +148,7 @@ public class SOAP12Fault {
      * @param namespaceURI
      * @return SOAP Fault Reason Text element for SOAP 1.2
      */
-    public static Element createSOAP12FaultReasonText(Document doc, String namespaceURI) {
+    public Element createSOAP12FaultReasonText(Document doc, String namespaceURI) {
         Element faultSubCodeValueElement = doc.createElementNS(namespaceURI, SOAP12Constants.SOAP_FAULT_TEXT);
         faultSubCodeValueElement.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
         faultSubCodeValueElement.appendChild(doc.createTextNode("Processing error"));
@@ -166,7 +166,7 @@ public class SOAP12Fault {
      * @param doc
      * @return fault reason text attribute
      */
-    public static Attr setAttrSOAP12FaultResonText(Document doc) {
+    public Attr setAttrSOAP12FaultResonText(Document doc) {
 
         Attr textAttr = doc.createAttribute(SOAP12Constants.SOAP_FAULT_TEXT_LANG);
         // textAttr.setPrefix(SOAP12Constants.SOAP_FAULT_TEXT_LANG_PREFIX);
@@ -181,13 +181,14 @@ public class SOAP12Fault {
      * @param namespaceURI
      * @return SOAP Fault Detail element for SOAP 1.2
      */
-    public static Element createSOAP12FaultDetails(Document doc, DocumentBuilder docBuilder, String namespaceURI) throws Exception {
+    public Element createSOAP12FaultDetails(Document doc, DocumentBuilder docBuilder, String namespaceURI) throws Exception {
         Element faultDetailsElement = doc.createElementNS(namespaceURI, SOAP12Constants.SOAP_FAULT_DETAIL);
         faultDetailsElement.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
 
         //Add a user defined fault detail node
-        String faultDetails = SOAPFault.getFaultDetailsFromUser();
-        Node fragmentNode = SOAPFault.addFaultDetail(faultDetails, docBuilder, doc);
+        SOAPFault soapFault = new SOAPFault();
+        String faultDetails = soapFault.getFaultDetailsFromUser();
+        Node fragmentNode = soapFault.addFaultDetail(faultDetails, docBuilder, doc);
         faultDetailsElement.appendChild(fragmentNode);
 
         return faultDetailsElement;

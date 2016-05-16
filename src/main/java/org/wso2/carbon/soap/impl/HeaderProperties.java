@@ -31,9 +31,10 @@ public class HeaderProperties {
      * @return properties which contains transport binding rules
      * @throws Exception
      */
-    public static Properties setHeaderProperties() throws Exception {
+    public Properties setHeaderProperties() throws Exception {
         Properties properties = new Properties();
-        String soapVersion = SOAPVersion.getSOAPVersion();
+        SOAPVersion version = new SOAPVersion();
+        String soapVersion = version.getSOAPVersion();
         //
         if (soapVersion.equals(Constants.SOAP11_VERSION)) {
             properties.setProperty("Content-Type", SOAP11Constants.SOAP11_CONTENT_TYPE);

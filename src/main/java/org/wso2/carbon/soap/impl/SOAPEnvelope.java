@@ -41,7 +41,7 @@ public class SOAPEnvelope {
      *
      * @return SOAP Envelope/request and its components as a string to be passed as the input payload request
      */
-    public static String generateSOAPEnvelope() {
+    public String generateSOAPEnvelope() {
         String soapRequest = null;
         try {
             DocumentBuilder docBuilder = createDocumentBuilder();
@@ -52,11 +52,13 @@ public class SOAPEnvelope {
             doc.appendChild(rootElement);
 
             // Header Element
-            Element headerElement = SOAPHeader.createSOAPHeader(doc, docBuilder);
+            SOAPHeader soapHeader = new SOAPHeader();
+            Element headerElement = soapHeader.createSOAPHeader(doc, docBuilder);
             rootElement.appendChild(headerElement);
 
             // Body Element
-            Element bodyElement = SOAPBody.createSOAPBody(doc, docBuilder);
+            SOAPBody soapBody = new SOAPBody();
+            Element bodyElement = soapBody.createSOAPBody(doc, docBuilder);
             rootElement.appendChild(bodyElement);
 
             //Creating the SOAP Envelope
@@ -82,7 +84,7 @@ public class SOAPEnvelope {
      * @return documentBuilder
      * @throws Exception
      */
-    public static DocumentBuilder createDocumentBuilder() throws Exception {
+    public DocumentBuilder createDocumentBuilder() throws Exception {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         docFactory.setNamespaceAware(true);
@@ -97,8 +99,9 @@ public class SOAPEnvelope {
      * @return SOAP Envelope element
      * @throws Exception
      */
-    public static Element createSOAPEnvelope(Document doc) throws Exception {
-        String soapVersion = SOAPVersion.getSOAPVersion();
+    public Element createSOAPEnvelope(Document doc) throws Exception {
+        SOAPVersion version = new SOAPVersion();
+        String soapVersion = version.getSOAPVersion();
         String namespaceURI = null;
         String encodingNSURI = null;
         if (soapVersion.equals(Constants.SOAP11_VERSION)) {

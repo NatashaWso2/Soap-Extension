@@ -39,7 +39,7 @@ public class SOAPBody {
      * @return SOAPBody Element
      * @throws Exception
      */
-    public static Element createSOAPBody(Document doc, DocumentBuilder docBuilder) throws Exception {
+    public Element createSOAPBody(Document doc, DocumentBuilder docBuilder) throws Exception {
         String soapVersion = SOAPVersion.soapVersion;
         String namespaceURI = null;
         if (soapVersion.equals(Constants.SOAP11_VERSION)) {
@@ -61,7 +61,8 @@ public class SOAPBody {
         }
 
         // Fault Element inside the Body element
-        Element faultElement = SOAPFault.createSOAPFault(doc, docBuilder);
+        SOAPFault soapFault = new SOAPFault();
+        Element faultElement = soapFault.createSOAPFault(doc, docBuilder);
         bodyElement.appendChild(faultElement);
 
         return bodyElement;
@@ -77,7 +78,7 @@ public class SOAPBody {
      * @return node element i.e. the string request converted into an xml element by the DOM element
      * @throws Exception
      */
-    public static Node addRequestBody(String payload, DocumentBuilder docBuilder, Document doc) throws Exception {
+    public Node addRequestBody(String payload, DocumentBuilder docBuilder, Document doc) throws Exception {
         Node fragmentNode = docBuilder.parse(new InputSource(new StringReader(payload)))
                 .getDocumentElement();
         fragmentNode = doc.importNode(fragmentNode, true);
@@ -91,7 +92,7 @@ public class SOAPBody {
      *
      * @return payload request part with params
      */
-    public static String getRequestPayloadFromUser() {
+    public String getRequestPayloadFromUser() {
         String payload = "<ns1:hello xmlns:ns1='http://ode/bpel/unit-test.wsdl'><TestPart>Mellow</TestPart></ns1:hello>";
         return payload;
     }

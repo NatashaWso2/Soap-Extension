@@ -36,7 +36,7 @@ public class SOAPVersion {
      * @return SOAP version i.e. soap11 or soap12
      * @throws Exception
      */
-    public static String getSOAPVersion() throws Exception {
+    public String getSOAPVersion() throws Exception {
 
         javax.wsdl.xml.WSDLReader wsdlReader11 = javax.wsdl.factory.WSDLFactory.newInstance().newWSDLReader();
         Definition def = wsdlReader11.readWSDL("http://localhost:9763/services/HelloService?wsdl");
