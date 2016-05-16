@@ -11,19 +11,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.predic8</groupId>
-            <artifactId>soa-model-core</artifactId>
-            <version>1.5.4</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>${org.codehaus.groovy.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>wsdl4j.wso2</groupId>
             <artifactId>wsdl4j</artifactId>
             <version>1.6.2.wso2v4</version>
@@ -31,8 +18,5 @@
 
     </dependencies>
 
-    <properties>
-        <org.codehaus.groovy.version>2.3.9</org.codehaus.groovy.version>
-    </properties>
 
 </project>
