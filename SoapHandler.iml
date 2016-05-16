@@ -11,16 +11,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: com.predic8:soa-model-core:1.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy:2.3.9" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy-xml:2.3.9" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy-json:2.3.9" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.2.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.2.2" level="project" />
-    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.9" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.slf4j:jcl-over-slf4j:1.7.9" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy-all:2.3.9" level="project" />
-    <orderEntry type="library" name="Maven: wsdl4j.wso2:wsdl4j:1.6.2.wso2v4" level="project" />
+    <orderEntry type="library" name="Maven: wsdl4j:wsdl4j:1.6.2" level="project" />
   </component>
 </module>

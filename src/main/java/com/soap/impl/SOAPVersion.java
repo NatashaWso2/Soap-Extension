@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.soap.Impl;
+package com.soap.impl;
 
-import com.soap.Constants.Constants;
-import com.soap.Constants.SOAP11Constants;
+import com.soap.constants.Constants;
+import com.soap.constants.SOAP11Constants;
 
 import javax.wsdl.Definition;
 import javax.wsdl.Service;
@@ -40,6 +40,7 @@ public class SOAPVersion {
 
         javax.wsdl.xml.WSDLReader wsdlReader11 = javax.wsdl.factory.WSDLFactory.newInstance().newWSDLReader();
         Definition def = wsdlReader11.readWSDL("http://localhost:9763/services/HelloService?wsdl");
+                //("/home/natasha/Documents/workspace/SoapHandler/src/main/resources/HelloService.wsdl");
         String serviceName = "HelloService";
         String ns = def.getTargetNamespace();
         String port = "HelloPort";

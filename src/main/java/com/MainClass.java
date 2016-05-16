@@ -15,13 +15,12 @@ package com; /**
  */
 
 
-import com.soap.Impl.SOAPEnvelope;
+import com.soap.impl.SOAPEnvelope;
 
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPConnection;
 import javax.xml.soap.SOAPConnectionFactory;
-import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPMessage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -55,7 +54,7 @@ public class MainClass {
         MessageFactory mf = null;
         MimeHeaders hd = new MimeHeaders();
 
-        SOAPMessage msg = mf.newInstance(SOAPConstants.SOAP_1_1_PROTOCOL).createMessage(hd, new ByteArrayInputStream(soapMessage.getBytes(Charset.forName("UTF-8"))));
+        SOAPMessage msg = mf.newInstance().createMessage(hd, new ByteArrayInputStream(soapMessage.getBytes(Charset.forName("UTF-8"))));
 
         // Save message
         msg.saveChanges();

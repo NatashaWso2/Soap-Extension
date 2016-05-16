@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.soap.Constants;
+package com.soap.constants;
 
 /**
- * Constants specific to SOAP 1.1
+ * constants specific to SOAP 1.1
  */
 public interface SOAP11Constants extends Constants {
 
@@ -24,7 +24,7 @@ public interface SOAP11Constants extends Constants {
 
     public static final String SOAP_ENCODING_NAMESPACE_URI = "http://schemas.xmlsoap.org/soap/encoding/";
 
-    public static final String SOAP11_CONTENT_TYPE = "text/xml; charset=\"utf-8\"";
+    public static final String SOAP11_CONTENT_TYPE = "text/xml";
 
     public static final String ACTOR = "actor";
 

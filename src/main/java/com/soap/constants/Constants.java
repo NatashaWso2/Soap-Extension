@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.soap.Constants;
+package com.soap.constants;
 
 /**
- * Constants used by both SOAP 1.1 and SOAP 1.2 when creating the SOAP Envelope
+ * constants used by both SOAP 1.1 and SOAP 1.2 when creating the SOAP Envelope
  */
 public interface Constants {
 

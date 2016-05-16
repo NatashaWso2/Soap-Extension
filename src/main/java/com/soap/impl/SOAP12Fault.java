@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.soap.Impl;
+package com.soap.impl;
 
-import com.soap.Constants.Constants;
-import com.soap.Constants.SOAP12Constants;
+import com.soap.constants.Constants;
+import com.soap.constants.SOAP12Constants;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
