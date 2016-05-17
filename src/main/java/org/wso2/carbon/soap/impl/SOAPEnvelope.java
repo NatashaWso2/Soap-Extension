@@ -41,7 +41,7 @@ public class SOAPEnvelope {
      *
      * @return SOAP Envelope/request and its components as a string to be passed as the input payload request
      */
-    public String generateSOAPEnvelope() {
+    public String generateSOAPEnvelope() throws SOAPException {
         String soapRequest = null;
         try {
             DocumentBuilder docBuilder = createDocumentBuilder();
@@ -67,13 +67,8 @@ public class SOAPEnvelope {
             serializer.transform(new DOMSource(doc), new StreamResult(stw));
             soapRequest = stw.toString();
 
-
-        } catch (ParserConfigurationException pce) {
-            pce.printStackTrace();
         } catch (TransformerException tfe) {
-            tfe.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+            throw new SOAPException("Exceptional condition that occured during the transformation process.",tfe);
         }
         return soapRequest;
     }
@@ -84,9 +79,14 @@ public class SOAPEnvelope {
      * @return documentBuilder
      * @throws Exception
      */
-    public DocumentBuilder createDocumentBuilder() throws Exception {
+    public DocumentBuilder createDocumentBuilder() throws SOAPException{
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        DocumentBuilder docBuilder = null;
+        try {
+            docBuilder = docFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException pce) {
+            throw new SOAPException("Configuration Error",pce);
+        }
         docFactory.setNamespaceAware(true);
 
         return docBuilder;
@@ -99,7 +99,7 @@ public class SOAPEnvelope {
      * @return SOAP Envelope element
      * @throws Exception
      */
-    public Element createSOAPEnvelope(Document doc) throws Exception {
+    public Element createSOAPEnvelope(Document doc) throws SOAPException {
         SOAPVersion version = new SOAPVersion();
         String soapVersion = version.getSOAPVersion();
         String namespaceURI = null;
@@ -122,5 +122,7 @@ public class SOAPEnvelope {
 
         return rootElement;
     }
+
+
 }
 

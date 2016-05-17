@@ -20,6 +20,7 @@ import org.wso2.carbon.soap.constants.SOAP11Constants;
 
 import javax.wsdl.Definition;
 import javax.wsdl.Service;
+import javax.wsdl.WSDLException;
 import javax.wsdl.extensions.soap.SOAPAddress;
 import javax.xml.namespace.QName;
 
@@ -36,11 +37,15 @@ public class SOAPVersion {
      * @return SOAP version i.e. soap11 or soap12
      * @throws Exception
      */
-    public String getSOAPVersion() throws Exception {
-
-        javax.wsdl.xml.WSDLReader wsdlReader11 = javax.wsdl.factory.WSDLFactory.newInstance().newWSDLReader();
-        Definition def = wsdlReader11.readWSDL("http://localhost:9763/services/HelloService?wsdl");
-                //("/home/natasha/Documents/workspace/SoapHandler/src/main/resources/HelloService.wsdl");
+    public String getSOAPVersion() throws SOAPException{
+        Definition def = null;
+        try {
+            javax.wsdl.xml.WSDLReader wsdlReader11 = javax.wsdl.factory.WSDLFactory.newInstance().newWSDLReader();
+            def = wsdlReader11.readWSDL("http://localhost:9763/services/HelloService?wsdl");
+        } catch (WSDLException e) {
+            throw new SOAPException("Exception when reading the WSDL",e);
+        }
+        //("/home/natasha/Documents/workspace/SoapHandler/src/main/resources/HelloService.wsdl");
         String serviceName = "HelloService";
         String ns = def.getTargetNamespace();
         String port = "HelloPort";

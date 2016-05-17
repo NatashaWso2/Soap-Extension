@@ -23,8 +23,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
+import java.io.IOException;
 import java.io.StringReader;
 
 /**
@@ -39,7 +41,7 @@ public class SOAPHeader {
      * @return SOAP Header element
      * @throws Exception
      */
-    public Element createSOAPHeader(Document doc, DocumentBuilder docBuilder) throws Exception {
+    public Element createSOAPHeader(Document doc, DocumentBuilder docBuilder) throws SOAPException {
         String soapVersion = SOAPVersion.soapVersion;
         String namespaceURI = null;
         String specifiedEndpoint = null;
@@ -62,7 +64,7 @@ public class SOAPHeader {
         headerElement.setAttributeNode(specifiedEndpointAttr);*/
 
         //Attaching the header block the params given by the user to the SOAP Header
-        String headerBlock = getHeaderBlock();
+        String headerBlock = getHeaderBlock("");
         if (headerBlock == null || headerBlock.isEmpty()) {
         } else {
             Node fragmentNode = addHeaderBlock(headerBlock, docBuilder, doc);
@@ -79,7 +81,7 @@ public class SOAPHeader {
      * @param doc
      * @param namespaceURI
      * @return mustUnderstand attribute
-     */
+     *//*
     public Attr createMustUnderstandAttr(Document doc, String namespaceURI) {
         Attr mustUnderstandAttr = doc.createAttributeNS(namespaceURI, Constants.MUST_UNDERSTAND);
         mustUnderstandAttr.setValue("1");
@@ -87,20 +89,20 @@ public class SOAPHeader {
         return mustUnderstandAttr;
     }
 
-    /**
+    *//**
      * Creates the actor/role attribute which is used to address the Header element to a specific endpoint
      *
      * @param doc
      * @param namespaceURI
      * @param specifiedEndpoint
      * @return actor/role attribute
-     */
+     *//*
     public Attr createSpecifiedEndpointAttr(Document doc, String namespaceURI, String specifiedEndpoint) {
         Attr specifiedEndpointAttr = doc.createAttributeNS(namespaceURI, specifiedEndpoint);
         specifiedEndpointAttr.setValue("");
         specifiedEndpointAttr.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
         return specifiedEndpointAttr;
-    }
+    }*/
 
     /**
      * Attaching the header block with params given by the user to the SOAP Header
@@ -111,9 +113,16 @@ public class SOAPHeader {
      * @return node element i.e. the header block converted into an xml element by the DOM element
      * @throws Exception
      */
-    public Node addHeaderBlock(String headers, DocumentBuilder docBuilder, Document doc) throws Exception {
-        Node fragmentNode = docBuilder.parse(new InputSource(new StringReader(headers)))
-                .getDocumentElement();
+    public Node addHeaderBlock(String headers, DocumentBuilder docBuilder, Document doc) throws SOAPException {
+        Node fragmentNode = null;
+        try {
+            fragmentNode = docBuilder.parse(new InputSource(new StringReader(headers)))
+                    .getDocumentElement();
+        } catch (SAXException e) {
+            throw new SOAPException("Error with the XML Parser", e);
+        } catch (IOException e) {
+            throw new SOAPException("An I/O operation has been failed or interrupted", e);
+        }
         fragmentNode = doc.importNode(fragmentNode, true);
 
         return fragmentNode;
@@ -125,9 +134,9 @@ public class SOAPHeader {
      *
      * @return header block
      */
-    public String getHeaderBlock() {
+    public String getHeaderBlock(String headers) {
         //Sample header block is for SOAP 1.1. This is specified by the user
-        String headers = "<m:Trans xmlns:m=\"http://www.w3schools.com/transaction/\" soapenv:actor=\"http://www.w3schools.com/appml/\">234 </m:Trans>";
+        headers = "<m:Trans xmlns:m=\"http://www.w3schools.com/transaction/\" soapenv:actor=\"http://www.w3schools.com/appml/\">234 </m:Trans>";
         return headers;
     }
 

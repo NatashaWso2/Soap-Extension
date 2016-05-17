@@ -22,9 +22,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
+import java.io.IOException;
 import java.io.StringReader;
 
 /**
@@ -39,7 +41,7 @@ public class SOAPBody {
      * @return SOAPBody Element
      * @throws Exception
      */
-    public Element createSOAPBody(Document doc, DocumentBuilder docBuilder) throws Exception {
+    public Element createSOAPBody(Document doc, DocumentBuilder docBuilder) throws SOAPException {
         String soapVersion = SOAPVersion.soapVersion;
         String namespaceURI = null;
         if (soapVersion.equals(Constants.SOAP11_VERSION)) {
@@ -52,7 +54,7 @@ public class SOAPBody {
         bodyElement.setPrefix(Constants.SOAP_NAMESPACE_PREFIX);
 
         //Attaching the payload request part with params given by the user to the SOAP body
-        String requestPayload = getRequestPayloadFromUser();
+        String requestPayload = getRequestPayloadFromUser("");
         if (requestPayload == null || requestPayload.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please give the payload request part!!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -61,9 +63,9 @@ public class SOAPBody {
         }
 
         // Fault Element inside the Body element
-        SOAPFault soapFault = new SOAPFault();
+        /*SOAPFault soapFault = new SOAPFault();
         Element faultElement = soapFault.createSOAPFault(doc, docBuilder);
-        bodyElement.appendChild(faultElement);
+        bodyElement.appendChild(faultElement);*/
 
         return bodyElement;
 
@@ -78,9 +80,16 @@ public class SOAPBody {
      * @return node element i.e. the string request converted into an xml element by the DOM element
      * @throws Exception
      */
-    public Node addRequestBody(String payload, DocumentBuilder docBuilder, Document doc) throws Exception {
-        Node fragmentNode = docBuilder.parse(new InputSource(new StringReader(payload)))
-                .getDocumentElement();
+    public Node addRequestBody(String payload, DocumentBuilder docBuilder, Document doc) throws SOAPException {
+        Node fragmentNode = null;
+        try {
+            fragmentNode = docBuilder.parse(new InputSource(new StringReader(payload)))
+                    .getDocumentElement();
+        }  catch (SAXException e) {
+            throw new SOAPException("Error with the XML Parser", e);
+        } catch (IOException e) {
+            throw new SOAPException("An I/O operation has been failed or interrupted", e);
+        }
         fragmentNode = doc.importNode(fragmentNode, true);
 
         return fragmentNode;
@@ -92,8 +101,8 @@ public class SOAPBody {
      *
      * @return payload request part with params
      */
-    public String getRequestPayloadFromUser() {
-        String payload = "<ns1:hello xmlns:ns1='http://ode/bpel/unit-test.wsdl'><TestPart>Mellow</TestPart></ns1:hello>";
+    public String getRequestPayloadFromUser(String payload) {
+        payload = "<ns1:hello xmlns:ns1='http://ode/bpel/unit-test.wsdl'><TestPart>Mellow</TestPart></ns1:hello>";
         return payload;
     }
 }
